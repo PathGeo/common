@@ -11,11 +11,6 @@ app={
     "parameter":cgi.FieldStorage()
 }
 
-exception={
-    "pathgeodemo":"demo@42",
-    "maptime":"maptimedemo"
-}
-
 
 #queyr db to verify the login info.-------------------------------------------------------------------
 def checkLogin(email, password):
@@ -30,39 +25,27 @@ def checkLogin(email, password):
         }
         return msg[type]
 
+    #define which field need to be sent back to client
+    infos=["email", "dateRegister", "accountType", "credit"]
 
-    accountInfo={
-        "Email": "",
-        "Email_Verified": True,
-        "Signup_Date":"2013/07/01"
-    }
-    
-    #exception
-    if email in exception:
-        if (password==exception[email]):
-            accountInfo["Email"]=email
+
+    collection=MongoClient()["pathgeo"]["user"]
+    user=collection.find_one({"email": email})
+
+    #check if email exists
+    if(user is not None):
+        #check password
+        pw=user["password"]
+            
+        if(pw==password):
+            accountInfo={}
+            for info in infos:
+                accountInfo[info]=user[info]
             return returnMsg("success", accountInfo)
         else:
-            return returnMsg("error.email")
+            return returnMsg("error.password", None)
     else:
-        db=MongoClient()["pathgeo"]
-        collection=db["user"]
-        user=collection.find_one({"email": email})
-
-        #check if email exists
-        if(user is not None):
-            #check password
-            pw=user["password"]
-            
-            if(pw==password):
-                accountInfo["Email"]=user["email"]
-                accountInfo["Email_Verified"]=user["emailVerified"]
-                accountInfo["Signup_Date"]=user["dateRegister"].strftime("%Y-%m-%d %H:%M:%S %Z")
-                return returnMsg("success", accountInfo)
-            else:
-                return returnMsg("error.password", None)
-        else:
-            return returnMsg("error.email", None)
+        return returnMsg("error.email", None)
 
 
     
