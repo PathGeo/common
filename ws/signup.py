@@ -12,7 +12,7 @@ print "Content-Type: text/html \n"
 
 app={
     "parameter":cgi.FieldStorage(),
-    "dbName":"maptime",
+    "dbName":"pathgeo",
     "dbCollection": "user",
     "smtpServer":"smtp.gmail.com",
     "smtpPort":587,

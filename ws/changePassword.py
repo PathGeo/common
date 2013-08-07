@@ -32,7 +32,7 @@ def changePassword(email, oldPW, newPW):
     if email in exception:
         return returnMsg("error.cannotChange")
     else:
-        db=MongoClient()["maptime"]
+        db=MongoClient()["pathgeo"]
         collection=db["user"]
         user=collection.find_one({"email": email})
 

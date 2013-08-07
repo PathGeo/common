@@ -35,7 +35,7 @@ def getAccountInfo(email):
         msg["account"]["Email"]=email
         return msg
     else:
-        db=MongoClient()["maptime"]
+        db=MongoClient()["pathgeo"]
         collection=db["user"]
         user=collection.find_one({"email": email})
 

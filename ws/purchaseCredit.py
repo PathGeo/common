@@ -5,8 +5,8 @@ print "Content-Type: text/html \n"
 
 #global variable
 client=MongoClient()
-transaction=client["maptime"]["transaction"]
-userCollection=client["maptime"]["user"]
+transaction=client["pathgeo"]["transaction"]
+userCollection=client["pathgeo"]["user"]
 urlParameter=cgi.FieldStorage()
 
 
