@@ -11,10 +11,7 @@ app={
     "parameter":cgi.FieldStorage()
 }
 
-exception={
-    "pathgeodemo":"demo@42",
-    "maptime":"maptimedemo"
-}
+
 
 
 #queyr db to get the account info-------------------------------------------------------------------
@@ -22,38 +19,28 @@ def getAccountInfo(email):
     msg={
         "status":"ok",
         "msg": "query succesfully",
-        "account":{
-            "Email": "",
-            "Email_Verified": True,
-            "Signup_Date":"2013/07/01"
-        }
+        "account":{}
     }
 
-    
-    #exception
-    if email in exception:
-        msg["account"]["Email"]=email
+
+    collection=MongoClient()["pathgeo"]["user"]
+    user=collection.find_one({"email": email})
+
+    #check if email exists
+    if(user is not None):
+        accountInfo={}
+        infos=["email", "dateRegister", "accountType", "credit"]
+
+        for info in infos:
+            accountInfo[info]=user[info]
+        
+        msg["account"]=accountInfo
         return msg
     else:
-        db=MongoClient()["pathgeo"]
-        collection=db["user"]
-        user=collection.find_one({"email": email})
-
-        #check if email exists
-        if(user is not None):
-           msg["account"]["Email"]=user["email"]
-           msg["account"]["Email_Verified"]=user["emailVerified"]
-           msg["account"]["Signup_Date"]=user["dateRegister"].strftime("%Y-%m-%d %H:%M:%S %Z")
-
-           return msg
-        else:
-           return {
-                "status":"error",
-                "msg": "No such account. Please check again."
-            }
-
-
-    
+        return {
+            "status":"error",
+            "msg": "No such account. Please check again."
+        }    
 #---------------------------------------------------------------------------------------
 
 
