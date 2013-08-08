@@ -95,7 +95,7 @@ function getTransaction(email){
 		},
 		dataType:"json",
 		success: function(json){
-			var html='<h2>Transaction</h2><table>';
+			var html='<h2>Transaction</h2><input value="refresh" onclick="getTransaction(\"'+email+'\")" /><table>';
 				theader="<tr>",
 				tvalue="",
 				infos=["date", "description","transaction", "balance"];
