@@ -91,7 +91,7 @@ function getTransaction(email){
 	$.ajax({
 		url:"ws/getTransaction.py",
 		data:{
-			email:email
+			username:email
 		},
 		dataType:"json",
 		success: function(json){
