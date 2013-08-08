@@ -127,7 +127,7 @@ def recordError(error_msg):
             }
 
             #record log
-            errorLog["decription"]=error_msg
+            errorLog["description"]=error_msg
             transaction.insert(errorLog)
 
             return "[log error]: log success"
