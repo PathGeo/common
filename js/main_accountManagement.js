@@ -56,13 +56,14 @@ function getAccountInfo(email){
 		},
 		dataType:"json",
 		success: function(json){
-			var html="<ul>";
+			var html="<ul>", infos=["email", "accountType", "credit", "dataRegister"], v='';
 			if(json && json.account){
-				$.each(json.account, function(k,v){
-					html+="<li><label>"+k.replace("_", " ")+"</label>: "+v+"</li>";
+				$.each(infos, function(i,k){
+					if(json.account[k]){
+						v=json.account[k];
+						html+="<li><label>"+k.replace("_", " ").toUpperCase()+"</label>: "+ v +"</li>";
 						
-					if(k in app.userInfo){
-						app.userInfo[k]=v
+						if(k in app.userInfo){app.userInfo[k]=v}
 					}
 				})
 				html+="</ul>";
