@@ -15,6 +15,14 @@ $(document).on({
 		
 		//getAccount info
 		getAccountInfo(email);
+		
+		//get transaction
+		getTransaction(email);
+		
+		//load getSatisfiction help
+		$.getScript("https://loader.engage.gsfn.us/loader.js", function(scipt){
+			if (typeof GSFN !== "undefined") { GSFN.loadWidget(5632,{"containerId":"getsat-widget-5632"}); }
+		});
 	},
 	"pageshow": function(){	 
 		init_ui();
@@ -56,7 +64,7 @@ function getAccountInfo(email){
 		},
 		dataType:"json",
 		success: function(json){
-			var html="<ul>", infos=["email", "accountType", "credit", "dataRegister"], v='';
+			var html="<ul>", infos=["email", "accountType", "credit", "dateRegister"], v='';
 			if(json && json.account){
 				$.each(infos, function(i,k){
 					if(json.account[k]){
@@ -77,6 +85,32 @@ function getAccountInfo(email){
 }
 
 
+
+//get transaction
+function getTransaction(email){
+	$.ajax({
+		url:"ws/getTransaction.py",
+		data:{
+			email:email
+		},
+		dataType:"json",
+		success: function(json){
+			var html='<h2>Transaction</h2><table>';
+			
+			if(json && json.transaction){
+				$.each(json.transaction, function(i,obj){
+					
+				})
+				html+="</ul>";
+				
+				$("#transaction").html(html)
+			}
+		},
+		error: function(e){
+			console.log("[ERROR]getTransaction: "+ e.responseText);
+		}
+	});
+}
 
 
 //get url parameter

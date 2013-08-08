@@ -19,8 +19,25 @@ html, body {width:100%; height:100%; padding:0px; margin:0px;overflow:hidden; fo
 #accountDetail ul li label {font-weight:bold; width:50px; }
 
 #changePassword {margin-top:60px; border-top:0px solid #cccccc;}
-#changePassword fieldset > div.ui-input-text {width:35%;}
+#changePassword fieldset {padding:15px;}
+#changePassword fieldset > div.ui-input-text {width:300px;}
 #changePassword label.ui-input-text {font-size:14px;}
 #changePassword #changePassword_loading {display:none;}
 #changePassword #changePW_msg {color:#ff0000; margin-top:20px;}
 
+
+/** transaction */
+#transaction table {width:100%;color:#333333; border-collapse:collapse;}
+#transaction table tr td{padding:15px 5px 15px 5px; border-bottom:1px solid #f1f1f1; }
+#transaction table tr:nth-child(1) {background-color:#ebebeb; font-weight:bold;}
+#transaction table tr:not(:first-child):hover {background-color:#f1f1f1; }
+
+
+
+/**upgrade*/
+#upgrade table {border-collapse:collapse; width:100%; }
+#upgrade table tr:first-child {font-weight:bold; background-color:#eeeeee; }
+#upgrade table tr:first-child td {position:relative}
+#upgrade table tr:first-child td img {width:45px; height:45px; position:absolute; right:20px; top:0px; }
+#upgrade table td:first-child {font-weight:bold; background-color:#eeeeee; text-align:right; }
+#upgrade table td {border:1px solid #cccccc; padding:15px; }
