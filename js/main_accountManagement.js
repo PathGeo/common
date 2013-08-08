@@ -88,6 +88,8 @@ function getAccountInfo(email){
 
 //get transaction
 function getTransaction(email){
+	$("#transaction").html("<h2>Transaction</h2><img src='images/loading.gif'/>");
+	
 	$.ajax({
 		url:"ws/getTransaction.py",
 		data:{
@@ -95,7 +97,7 @@ function getTransaction(email){
 		},
 		dataType:"json",
 		success: function(json){
-			var html='<h2>Transaction</h2><input value="refresh" onclick="getTransaction(\"'+email+'\")" /><table>';
+			var html='<h2>Transaction</h2><input type="button" value="refresh" onclick="getTransaction(\"'+email+'\")" /><table>';
 				theader="<tr>",
 				tvalue="",
 				infos=["date", "description","transaction", "balance"];
