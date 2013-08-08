@@ -88,7 +88,8 @@ function getAccountInfo(email){
 
 //get transaction
 function getTransaction(email){
-	$("#transaction").html("<h2>Transaction</h2><img src='images/loading.gif'/>");
+	$("#transaction_loading").show();
+	$("#transaction table").html("");
 	
 	$.ajax({
 		url:"ws/getTransaction.py",
@@ -111,13 +112,16 @@ function getTransaction(email){
 					tvalue+='<tr>';
 					$.each(infos, function(j,header){
 						if(i==0){
-							theader+="<td>"+header+"</td>";
+							theader+="<td>"+header.toUpperCase()+"</td>";
 						}
 						tvalue+='<td>'+obj[header]+"</td>";
 					});
 					tvalue+='</tr>';
 				});
 				html+=theader+"</tr>"+tvalue;
+				
+				//hide loading image
+				$("#transaction_loading").hide();
 				
 				$("#transaction table").html(html);
 			}

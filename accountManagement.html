@@ -87,7 +87,7 @@
 		                    <input id="btn_changePW" type="submit" value="Save" data-role="button" data-inline="true" data-theme="b" onclick="changePW();" ></input>
 		            		
 							<img id='changePassword_loading' src='images/loading.gif'/>
-							<div id='changePW_msg'  class='msg'>msg</div>
+							<div id='changePW_msg'  class='msg'></div>
 						</fieldset> 
 						
 						
@@ -97,7 +97,8 @@
 				<!--transaction-->
 				<div id='transaction' class='content'>
 					<h2>Transaction</h2>
-					<input type="button" value="refresh" onclick="getTransaction(app.userInfo.email);" />
+					<input type="button" value="Refresh"   onclick="getTransaction(app.userInfo.email);" />
+					<img src='images/loading.gif' id='transaction_loading' style='display:none'/>
 					
 					<table></table>
 				</div>
