@@ -28,12 +28,17 @@ msg={
     "status":"error",
     "msg":"email is not correct! <br>Please check again"
 }
-
+results=[]
 
 if(username!='null'):
-    result=list(transaction.find({"email":username}))
-    msg=result
+    trans=transaction.find({"email":username})
 
+    #delete _id key
+    for tran in trans:
+        tran.pop("_id",None)
+        results.append(tran)
+
+    msg=results
 
 
 print simplejson.dumps(msg)
