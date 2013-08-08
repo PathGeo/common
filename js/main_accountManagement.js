@@ -97,7 +97,7 @@ function getTransaction(email){
 		},
 		dataType:"json",
 		success: function(json){
-			var html='<h2>Transaction</h2><input type="button" value="refresh" onclick=\"getTransaction("'+email+'")\" /><table>';
+			var html='';
 				theader="<tr>",
 				tvalue="",
 				infos=["date", "description","transaction", "balance"];
@@ -117,9 +117,9 @@ function getTransaction(email){
 					});
 					tvalue+='</tr>';
 				});
-				html+=theader+"</tr>"+tvalue+"</table>";
+				html+=theader+"</tr>"+tvalue;
 				
-				$("#transaction").html(html).button("refresh");
+				$("#transaction table").html(html);
 			}
 		},
 		error: function(e){
