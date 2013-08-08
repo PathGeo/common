@@ -95,23 +95,25 @@ function getTransaction(email){
 		},
 		dataType:"json",
 		success: function(json){
-			var html='<h2>Transaction</h2><table>',
-				tvalue=''
-				theader='<tr>';
+			var html='<h2>Transaction</h2><table>';
+				theader="<tr>",
+				tvalue="",
+				infos=["date", "description","transaction", "balance"];
 			
 			//if json is array
 			if(json && json instanceof Array && json.length>0){
 				//from last to first
 				json.reverse();
+				
 				$.each(json, function(i,obj){
-					tvalue+="<tr>"
-					$.each(obj, function(k,v){
-						if(i == 0){
-							theader += "<td>" + k + "</td>";
+					tvalue+='<tr>';
+					$.each(infos, function(j,header){
+						if(i==0){
+							theader+="<td>"+header+"</td>";
 						}
-						tvalue+='<td>'+v+"</td>";
+						tvalue+='<td>'+obj[header]+"</td>";
 					});
-					tvalue+="</tr>"
+					tvalue+='</tr>';
 				});
 				html+=theader+"</tr>"+tvalue+"</table>";
 				
