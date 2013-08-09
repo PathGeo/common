@@ -23,6 +23,12 @@ $(document).on({
 		$.getScript("https://loader.engage.gsfn.us/loader.js", function(scipt){
 			if (typeof GSFN !== "undefined") { GSFN.loadWidget(5632,{"containerId":"getsat-widget-5632"}); }
 		});
+		
+		//switch to the tab if any
+		var tab=getURLParameter('tab');
+		if(tab && tab!=""){
+			$("#tab li[href='"+tab+"']").trigger('click');
+		}
 	},
 	"pageshow": function(){	 
 		init_ui();
