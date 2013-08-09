@@ -51,15 +51,18 @@ def register(obj):
         id=collection.find_one({"email": obj["email"]})["_id"]
         id=str(id)
         #sendEmail(obj["email"], id)
-        
+
+
+        #define which field need to be sent back to client
+        infos=["email", "dateRegister", "accountType", "credit"]
+        accountInfo={}
+        for info in infos:
+            accountInfo[info]=obj[info]
+
         return {
             "status":"ok",
             "msg":"signup succesfully",
-            "account":{
-                "email":obj["email"],
-                "emailVerified": obj["emailVerified"],
-                "signupDate": obj["dateRegister"]
-            }
+            "account":accountInfo
         }
 #----------------------------------------------------------------------------
 
