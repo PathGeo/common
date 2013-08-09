@@ -139,6 +139,14 @@ function getTransaction(email){
 }
 
 
+//showPayment
+function showPayment(plan){
+	//redirect to accountManagement.html
+	window.location.href="purchaseCredit.html?email="+app.userInfo.email+"&plan="+plan;
+}
+
+
+
 //get url parameter
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
