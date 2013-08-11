@@ -125,12 +125,17 @@ else:
             #if getUserInfo sucesseed
             if userInfo is not None:
                 accountInfo=saveinMongo(userInfo["email"])
-                
+
+                msg=None
+                '''
                 msg={
                     "status":"ok",
                     "msg":"signup/login succesfully",
                     "account": accountInfo
                 }
+                '''
+                #send accountInfo back to the main webpage ('the parent of iframe') function: oauth_callback
+                print "<script>parent.oauth_callback("+ simplejson.dumps(accountInfo)+");</script>"
             else:
                 msg["msg"]="Error: userInfo: \n" + userInfo
         else:
@@ -142,3 +147,4 @@ else:
 
 if(msg is not None):
     print simplejson.dumps(msg)
+    
