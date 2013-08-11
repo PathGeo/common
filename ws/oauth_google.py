@@ -14,8 +14,8 @@ print """
     <style type='text/css'>
         html, body {width:100%; height:100%; font-family:Arial; margin:0px; padding:0px; overflow:hidden; }
         div {width:100%; height:90%; margin:0 auto; overflow:hidden; text-align:center; background-color:#f1f1f1 }
-        h2 {background-color:#555555; color:#ffffff; padding:20px; margin-top:0px; }
-        h2 p {color:#aaaaaa; font-size:16px; }
+        h2 {background-color:#cccccc; color:#ffffff; padding:20px; margin-top:0px; }
+        h2 p {color:#777777; font-size:16px; }
         ul {list-style:none; padding:0px; margin:0px; width:100%; }
         ul li {float:left;  width:33%;  }
         ul li img {width:50%;}
