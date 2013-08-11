@@ -13,7 +13,7 @@ print """
 <head>
     <style type='text/css'>
         html, body {width:100%; height:100%; font-family:Arial; margin:0px; padding:0px; overflow:hidden; }
-        div {width:100%; height:90%; margin:0 auto; overflow:hidden; text-align:center; background-color:#f1f1f1 }
+        div {width:100%; height:100%; margin:0 auto; overflow:hidden; text-align:center; background-color:#f1f1f1 }
         h2 {background-color:#cccccc; color:#ffffff; padding:20px; margin-top:0px; }
         h2 p {color:#777777; font-size:16px; }
         ul {list-style:none; padding:0px; margin:0px; width:100%; }
@@ -157,7 +157,7 @@ else:
                 }
                 '''
                 #send accountInfo back to the main webpage ('the parent of iframe') function: oauth_callback
-                print "<script>parent.oauth_callback("+ simplejson.dumps(accountInfo)+");</script>"
+                print "<script>window.opener.oauth_callback("+ simplejson.dumps(accountInfo)+");</script>"
             else:
                 msg["msg"]="Error: userInfo: \n" + userInfo
         else:
