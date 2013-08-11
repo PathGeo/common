@@ -9,7 +9,29 @@ from pymongo import MongoClient
 
 
 print "Content-Type: text/html; charset=utf-8 \n"
-
+print """
+<head>
+    <style type='text/css'>
+        html, body {width:100%; height:100%; font-family:Arial; margin:0px; padding:0px; overflow:hidden; }
+        div {width:100%; height:90%; margin:0 auto; overflow:hidden; text-align:center; background-color:#f1f1f1 }
+        h2 {background-color:#333333; color:#ffffff; padding:20px; margin-top:0px; }
+        h2 p {color:#aaaaaa; font-size:16px; }
+        ul {list-style:none; padding:0px; margin:0px; width:100%; display: table-row; }
+        ul li {float:left;  width:33%;  }
+        ul li img {width:80%;}
+    </style>
+</head>
+</body>
+<div>
+    <h2>Authorizing....<p>PathGeo is syncing account information with your Google account. <br>Please wait.</p></h2><p></p>
+    <ul>
+        <li><img src='../images/PathGeo-color.png'/></li>
+        <li><img src='../images/loading.gif' style='width:30px;'/></li>
+        <li><img src='../images/1376249138_social_google_box.png'/></li>
+    </ul>
+</div>
+</body>
+"""
 
 app={
     "parameter":cgi.FieldStorage()
