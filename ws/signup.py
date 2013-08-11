@@ -122,7 +122,8 @@ if(email!='null' and password!='null'):
         "emailVerified": False,
         "dateRegister": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
         "accountType": "free",
-        "credit": 3000
+        "credit": 3000,
+        "oauth":None
     }
 
     #resiter a user account and print result

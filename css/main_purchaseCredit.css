@@ -37,5 +37,5 @@ html, body {width:100%; height:100%; padding:0px; margin:0px;overflow:hidden; fo
 #payment_msg {margin:0px !important; margin-left:35px !important; width:89% !important; color:#ff0000; height:15px;}
 
 /**payment loading img*/
-#payment_loading {position:absolute; display:none; top:390px; right:250px;}
+#payment_loading {position:absolute; display:none; top:390px; right:220px;}
 
