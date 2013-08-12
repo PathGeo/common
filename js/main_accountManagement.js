@@ -174,7 +174,8 @@ function changePW(){
 		data:{
 			email: app.userInfo.email,
 			oldPW: oldPW,
-			newPW: newPW
+			newPW: newPW,
+			oauth: app.userInfo.oauth
 		},
 		dataType:"json",
 		success:function(json){
