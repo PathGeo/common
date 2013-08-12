@@ -24,6 +24,8 @@ def getParameterValue(name):
 
 #main
 username=getParameterValue("username")
+oauth=getParameterValue("oauth")
+
 msg={
     "status":"error",
     "msg":"email is not correct! <br>Please check again"
@@ -31,7 +33,7 @@ msg={
 results=[]
 
 if(username!='null'):
-    trans=transaction.find({"email":username})
+    trans=transaction.find({"email":username, "oauth": oauth})
 
     #delete _id key
     for tran in trans:

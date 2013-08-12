@@ -15,7 +15,7 @@ app={
 
 
 #queyr db to get the account info-------------------------------------------------------------------
-def getAccountInfo(email):
+def getAccountInfo(email, oauth):
     msg={
         "status":"ok",
         "msg": "query succesfully",
@@ -24,7 +24,7 @@ def getAccountInfo(email):
 
 
     collection=MongoClient()["pathgeo"]["user"]
-    user=collection.find_one({"email": email})
+    user=collection.find_one({"email": email, "oauth":oauth})
 
     #check if email exists
     if(user is not None):
@@ -58,6 +58,7 @@ def getParameterValue(name):
 
 #main
 email=getParameterValue("email")
+oauth=getParameterValue("oauth")
 
 msg={
     "status":"error",
@@ -67,6 +68,6 @@ msg={
 
 if(email!='null'):
     #get account info
-    msg=getAccountInfo(email)
+    msg=getAccountInfo(email, oauth)
 
 print simplejson.dumps(msg)

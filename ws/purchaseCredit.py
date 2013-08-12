@@ -23,6 +23,7 @@ def getParameterValue(name):
 
 
 username=getParameterValue("username")
+oauth=getParameterValue("oauth")
 plan=getParameterValue("plan")
 card_name=getParameterValue("card_name")
 card_number=getParameterValue("card_number")
@@ -56,7 +57,7 @@ def calculateHashcode(x_login, x_fp_sequence, x_fp_timestamp, x_amount, x_curren
 
 #add credit and record transaction
 def addCredit(credit):
-    user=userCollection.find_one(username)
+    user=userCollection.find_one({"email":username, "oauth":oauth)
     credit=int(credit)
     
     if(user is not None):
@@ -70,7 +71,8 @@ def addCredit(credit):
                 "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
                 "description": "[addCredit] " + str(credit),
                 "transaction": credit,
-                "balance": user["credit"]
+                "balance": user["credit"],
+                "oauth"oauth
             })
             return "succeed"
         else:
@@ -123,7 +125,8 @@ def recordError(error_msg):
                 "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
                 "description": None,
                 "transaction": None,
-                "balance": userCredit
+                "balance": userCredit,
+                "oauth":oauth
             }
 
             #record log

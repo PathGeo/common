@@ -18,7 +18,7 @@ exception={
 
 
 #queyr db to get the account info-------------------------------------------------------------------
-def changePassword(email, oldPW, newPW):
+def changePassword(email, oauth, oldPW, newPW):
     def returnMsg(type):
         msg={
             "success": {"status":"ok","msg": "change password succesfully"},
@@ -33,7 +33,7 @@ def changePassword(email, oldPW, newPW):
         return returnMsg("error.cannotChange")
     else:
         collection=MongoClient()["pathgeo"]["user"]
-        user=collection.find_one({"email": email})
+        user=collection.find_one({"email": email, "oauth": oauth})
 
         #check if email exists
         if(user is not None):
@@ -71,6 +71,7 @@ def getParameterValue(name):
 email=getParameterValue("email")
 oldPW=getParameterValue("oldPW")
 newPW=getParameterValue("newPW")
+oauth=getParameterValue("oauth")
 
 msg={
     "status":"error",
@@ -79,6 +80,6 @@ msg={
 
 if(email!='null' and oldPW!='null' and newPW!='null'):
     #get account info
-    msg=changePassword(email, oldPW, newPW)
+    msg=changePassword(email, oauth,  oldPW, newPW)
 
 print simplejson.dumps(msg)

@@ -30,7 +30,7 @@ def checkLogin(email, password):
 
 
     collection=MongoClient()["pathgeo"]["user"]
-    user=collection.find_one({"email": email})
+    user=collection.find_one({"email": email, "oauth": None})
 
     #check if email exists
     if(user is not None):
