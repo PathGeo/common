@@ -97,7 +97,7 @@ def getUserInfo(token):
 def saveinMongo(email):
     userCollection=MongoClient()["pathgeo"]["user"]
     user=userCollection.find_one({"email":email, "oauth":"google"})
-    infos=["email", "dateRegister", "accountType", "credit"]
+    infos=["email", "dateRegister", "accountType", "credit", "oauth"]
     accountInfo={}
 
     #if the user does not exist >> sign up, else >> login
