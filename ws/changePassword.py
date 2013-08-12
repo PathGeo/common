@@ -78,8 +78,12 @@ msg={
     "msg":"email, old password, or new password is missing! Please check again"
 }
 
-if(email is not None and oldPW is not None and newPW is not None):
-    #get account info
-    msg=changePassword(email, oauth,  oldPW, newPW)
+if(oauth is not None):
+    #cannot change the password of oauth account
+    msg["msg"]="cannot change the password of oauth account"
+else:
+    if(email is not None and oldPW is not None and newPW is not None):
+        #get account info
+        msg=changePassword(email, oauth,  oldPW, newPW)
 
 print simplejson.dumps(msg)

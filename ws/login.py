@@ -26,7 +26,7 @@ def checkLogin(email, password):
         return msg[type]
 
     #define which field need to be sent back to client
-    infos=["email", "dateRegister", "accountType", "credit"]
+    infos=["email", "dateRegister", "accountType", "credit", "oauth"]
 
 
     collection=MongoClient()["pathgeo"]["user"]

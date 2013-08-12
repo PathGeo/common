@@ -72,7 +72,7 @@ def addCredit(credit):
                 "description": "[addCredit] " + str(credit),
                 "transaction": credit,
                 "balance": user["credit"],
-                "oauth"oauth
+                "oauth":oauth
             })
             return "succeed"
         else:

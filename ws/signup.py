@@ -54,7 +54,7 @@ def register(obj):
 
 
         #define which field need to be sent back to client
-        infos=["email", "dateRegister", "accountType", "credit"]
+        infos=["email", "dateRegister", "accountType", "credit", "oauth"]
         accountInfo={}
         for info in infos:
             accountInfo[info]=obj[info]

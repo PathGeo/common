@@ -29,7 +29,7 @@ def getAccountInfo(email, oauth):
     #check if email exists
     if(user is not None):
         accountInfo={}
-        infos=["email", "dateRegister", "accountType", "credit"]
+        infos=["email", "dateRegister", "accountType", "credit", "oauth"]
 
         for info in infos:
             accountInfo[info]=user[info]
