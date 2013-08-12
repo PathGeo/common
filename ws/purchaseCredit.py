@@ -57,7 +57,7 @@ def calculateHashcode(x_login, x_fp_sequence, x_fp_timestamp, x_amount, x_curren
 
 #add credit and record transaction
 def addCredit(credit):
-    user=userCollection.find_one({"email":username, "oauth":oauth)
+    user=userCollection.find_one({"email":username, "oauth":oauth})
     credit=int(credit)
     
     if(user is not None):
@@ -113,7 +113,7 @@ def purchase(cardholder_name, cardholder_number, cardholder_authNumber, cardhold
 
 #record error msg in the transaction log
 def recordError(error_msg):
-    user=userCollection.find_one({"email":username})
+    user=userCollection.find_one({"email":username, "oauth":oauth})
 
     if(user is not None):
         userCredit=user["credit"]

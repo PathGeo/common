@@ -13,9 +13,10 @@ $(document).on({
 	"ready": function(){
 		//get url parameter 
 		var email=app.userInfo.email=getURLParameter('email'),
-			oauth=app.userInfo.oauth=getURLParameter('oauth') || null 
+			oauth=app.userInfo.oauth=getURLParameter('oauth');
+			
+		if(oauth=='null'){oauth=null}
 		
-		console.log(oauth);
 		
 		//getAccount info
 		getAccountInfo(email, oauth);
@@ -148,7 +149,7 @@ function getTransaction(email, oauth){
 //showPayment
 function showPayment(plan){
 	//redirect to accountManagement.html
-	window.location.href="purchaseCredit.html?email="+app.userInfo.email+"&plan="+plan;
+	window.location.href="purchaseCredit.html?email="+app.userInfo.email+"&oauth="+app.userInfo.oauth+"&plan="+plan;
 }
 
 

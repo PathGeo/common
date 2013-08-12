@@ -1,7 +1,8 @@
 var app={
 	userInfo:{
 		email:null,
-		plan:null
+		plan:null,
+		oauth:null
 	}
 }
 
@@ -24,6 +25,9 @@ function init(){
 	//get url parameter 
 	var email=app.userInfo.email=getURLParameter('email'),
 		plan=app.userInfo.plan=getURLParameter('plan');
+		oauth=app.userInfo.oauth=getURLParameter('oauth');
+	
+	if(oauth=='null'){oauth=app.userInfo.oauth=null}
 	
 	showPayment(plan);
 	
@@ -176,7 +180,8 @@ function purchase(){
 				$.ajax({
 					url:"ws/purchaseCredit.py",
 					data:{
-						username:app.userInfo.email,
+						email:app.userInfo.email,
+						oauth:app.userInfo.oauth,
 						plan:plan,
 						card_name:card_name,
 						card_number:card_number,
