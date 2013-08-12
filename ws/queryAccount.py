@@ -46,7 +46,7 @@ def getAccountInfo(email, oauth):
 
 #get value from URL parameter--------------------------------------------
 def getParameterValue(name):
-    value="null"
+    value=None
     
     if(name in app["parameter"] and app["parameter"][name].value!=""):
         value=app["parameter"].getvalue(name)
@@ -59,6 +59,7 @@ def getParameterValue(name):
 #main
 email=getParameterValue("email")
 oauth=getParameterValue("oauth")
+
 
 msg={
     "status":"error",

@@ -57,7 +57,7 @@ def changePassword(email, oauth, oldPW, newPW):
 
 #get value from URL parameter--------------------------------------------
 def getParameterValue(name):
-    value="null"
+    value=None
     
     if(name in app["parameter"] and app["parameter"][name].value!=""):
         value=app["parameter"].getvalue(name)
@@ -78,7 +78,7 @@ msg={
     "msg":"email, old password, or new password is missing! Please check again"
 }
 
-if(email!='null' and oldPW!='null' and newPW!='null'):
+if(email is not None and oldPW is not None and newPW is not None):
     #get account info
     msg=changePassword(email, oauth,  oldPW, newPW)
 

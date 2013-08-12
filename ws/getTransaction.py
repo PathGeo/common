@@ -12,7 +12,7 @@ urlParameter=cgi.FieldStorage()
 
 #get value from URL parameter--------------------------------------------
 def getParameterValue(name):
-    value="null"
+    value=None
     
     if(name in urlParameter and urlParameter[name].value!=""):
         value=urlParameter.getvalue(name)
@@ -23,7 +23,7 @@ def getParameterValue(name):
 
 
 #main
-username=getParameterValue("username")
+username=getParameterValue("email")
 oauth=getParameterValue("oauth")
 
 msg={
@@ -32,7 +32,7 @@ msg={
 }
 results=[]
 
-if(username!='null'):
+if(username is not None):
     trans=transaction.find({"email":username, "oauth": oauth})
 
     #delete _id key

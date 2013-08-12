@@ -12,7 +12,7 @@ urlParameter=cgi.FieldStorage()
 
 #get value from URL parameter--------------------------------------------
 def getParameterValue(name):
-    value="null"
+    value=None
     
     if(name in urlParameter and urlParameter[name].value!=""):
         value=urlParameter.getvalue(name)
@@ -22,7 +22,7 @@ def getParameterValue(name):
 
 
 
-username=getParameterValue("username")
+username=getParameterValue("email")
 oauth=getParameterValue("oauth")
 plan=getParameterValue("plan")
 card_name=getParameterValue("card_name")
@@ -150,7 +150,7 @@ msg={
 }
 
 
-if(username!='null' and plan!='null' and card_name!='null' and card_number!='null' and card_authNumber!='null' and card_expiryDate!='null'):
+if(username is not None and plan is not None and card_name is not None and card_number is not None and card_authNumber is not None and card_expiryDate is not None):
     #determine amonunt by plan
     plans={
         "plusA":30,

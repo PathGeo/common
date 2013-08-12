@@ -24,7 +24,7 @@ app={
 
 #get value from URL parameter--------------------------------------------
 def getParameterValue(name):
-    value="null"
+    value=None
     
     if(name in app["parameter"] and app["parameter"][name].value!=""):
         value=app["parameter"].getvalue(name)
@@ -112,7 +112,7 @@ msg={
     "msg":"email or password is not correct! Please check again"
 }
 
-if(email!='null' and password!='null'):
+if(email is not None and password is not None):
     #sign up
     #user obj
     obj={
