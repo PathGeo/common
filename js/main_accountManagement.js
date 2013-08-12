@@ -2,7 +2,8 @@ var app={
 	userInfo:{
 		email:null,
 		accountType:null,
-		credit:null
+		credit:null,
+		oauth:null
 	}
 }
 
@@ -11,13 +12,16 @@ var app={
 $(document).on({
 	"ready": function(){
 		//get url parameter 
-		var email=app.userInfo.email=getURLParameter('email')
+		var email=app.userInfo.email=getURLParameter('email'),
+			oauth=app.userInfo.oauth=getURLParameter('oauth') || null 
+		
+		console.log(oauth);
 		
 		//getAccount info
-		getAccountInfo(email);
+		getAccountInfo(email, oauth);
 		
 		//get transaction
-		getTransaction(email);
+		getTransaction(email, oauth);
 		
 		//load getSatisfiction help
 		$.getScript("https://loader.engage.gsfn.us/loader.js", function(scipt){
@@ -62,11 +66,12 @@ function init_ui(){
 
 
 //get account info
-function getAccountInfo(email){
+function getAccountInfo(email, oauth){
 	$.ajax({
 		url:"ws/queryAccount.py",
 		data:{
-			email:email
+			email:email,
+			oauth:oauth
 		},
 		dataType:"json",
 		success: function(json){
@@ -93,14 +98,15 @@ function getAccountInfo(email){
 
 
 //get transaction
-function getTransaction(email){
+function getTransaction(email, oauth){
 	$("#transaction_loading").show();
 	$("#transaction table").html("");
 	
 	$.ajax({
 		url:"ws/getTransaction.py",
 		data:{
-			username:email
+			email:email,
+			oauth:oauth
 		},
 		dataType:"json",
 		success: function(json){
