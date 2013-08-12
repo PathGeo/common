@@ -116,27 +116,33 @@ function getTransaction(email, oauth){
 				tvalue="",
 				infos=["date", "description","transaction", "balance"];
 			
+			
 			//if json is array
-			if(json && json instanceof Array && json.length>0){
-				//from last to first
-				json.reverse();
-				
-				$.each(json, function(i,obj){
-					tvalue+='<tr>';
-					$.each(infos, function(j,header){
-						if(i==0){
-							theader+="<td>"+header.toUpperCase()+"</td>";
-						}
-						tvalue+='<td>'+obj[header]+"</td>";
-					});
-					tvalue+='</tr>';
-				});
-				html+=theader+"</tr>"+tvalue;
-				
+			if(json && json instanceof Array){
 				//hide loading image
 				$("#transaction_loading").hide();
 				
+				if(json.length==0){
+					html="You don't have any transaction yet!";
+				}else{
+					//from last to first
+					json.reverse();
+					
+					$.each(json, function(i,obj){
+						tvalue+='<tr>';
+						$.each(infos, function(j,header){
+							if(i==0){
+								theader+="<td>"+header.toUpperCase()+"</td>";
+							}
+							tvalue+='<td>'+obj[header]+"</td>";
+						});
+						tvalue+='</tr>';
+					});
+					html+=theader+"</tr>"+tvalue;
+				
+				}
 				$("#transaction table").html(html);
+				
 			}
 		},
 		error: function(e){

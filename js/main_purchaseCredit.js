@@ -235,7 +235,7 @@ function showPaymentMsg(msg){
 //change other plan
 function changePlan(){
 	//redirect to accountManagement.html
-	window.location.href='accountManagement.html?email='+app.userInfo.email+'&tab=upgrade';
+	window.location.href='accountManagement.html?email='+app.userInfo.email+'&oauth='+app.userInfo.oauth+'&tab=upgrade';
 }
 
 
