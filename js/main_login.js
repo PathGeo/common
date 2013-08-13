@@ -27,7 +27,7 @@ $(document).on({
 //init user interface
 function init_ui(){
 	var product=getURLParameter("product") || "pathgeo";
-
+	
 
 	//change title based on the 'product' parameter
 	changeTitle(product)
@@ -41,9 +41,9 @@ function init_ui(){
 function changeTitle(product){
 	//change title
 	var titles={
-		"PathGeo":"A Geo-Targeting Social Web Analytics company <br>focusing on GIS functions, Real-time, and Impact detection.",
-		"MapTime":"MapTime is a web-based mapping tool that allows you to geocode<br>and geo-analyze their data (with street addresses) into maps.",
-		"SocialTime":"SocialTime is a real-time social media geo-search tool <br>that allows users to retrieve social media feedbacks, <br>online reputations, and customer opinions."
+		"pathgeo":"A Geo-Targeting Social Web Analytics company <br>focusing on GIS functions, Real-time, and Impact detection.",
+		"maptime":"MapTime is a web-based mapping tool that allows you to geocode<br>and geo-analyze their data (with street addresses) into maps.",
+		"socialmedia":"SocialTime is a real-time social media geo-search tool <br>that allows users to retrieve social media feedbacks, <br>online reputations, and customer opinions."
 	}
 	var title=titles[product]
 	$("#mainContent h2 label").html(title)
@@ -204,5 +204,5 @@ function callParent(accountInfo){
 
 //get url parameter
 function getURLParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))|| null;
 }
