@@ -14,6 +14,9 @@ def getParameterValue(name):
     if(name in app["parameter"] and app["parameter"][name].value!=""):
         value=app["parameter"].getvalue(name)
 
+    if(value is not None and value.upper()=='NULL'):
+        value=None
+        
     return value
 #--------------------------------------------------------------------------
 
