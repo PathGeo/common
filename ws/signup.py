@@ -125,7 +125,7 @@ if(email is not None and password is not None):
         "emailVerified": False,
         "dateRegister": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
         "accountType": "free",
-        "credit": 3000,
+        "credit": 6000,
         "oauth":None
     }
 
