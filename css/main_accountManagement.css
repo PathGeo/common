@@ -43,3 +43,8 @@ html, body {width:100%; height:100%; padding:0px; margin:0px;overflow:hidden; fo
 #upgrade table tr:first-child td img {width:45px; height:45px; position:absolute; right:20px; top:0px; }
 #upgrade table td:first-child {font-weight:bold; background-color:#eeeeee; text-align:right; }
 #upgrade table td {border:1px solid #cccccc; padding:15px; }
+
+
+/** about */
+#about img {cursor:pointer}
+#about .mail {width:70px; padding-right:20px; }

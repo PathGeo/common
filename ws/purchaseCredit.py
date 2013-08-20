@@ -115,7 +115,7 @@ def purchase(cardholder_name, cardholder_number, cardholder_authNumber, cardhold
 #--------------------------------------------------------------------------
 
 #record error msg in the transaction log
-def recordError(error_msg):
+def recordTransaction(description, amount, result):
     user=userCollection.find_one({"email":username, "oauth":oauth})
 
     if(user is not None):
@@ -123,18 +123,18 @@ def recordError(error_msg):
 
         if(userCredit is not None):
             userCredit=int(userCredit)
-            errorLog={
+            log={
                 "email": username,
                 "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
-                "description": None,
-                "transaction": None,
+                "description": description,
+                "transaction": amount,
                 "balance": userCredit,
-                "oauth":oauth
+                "oauth":oauth,
+                "result": result
             }
 
             #record log
-            errorLog["description"]=error_msg
-            transaction.insert(errorLog)
+            transaction.insert(log)
 
             return "[log error]: log success"
         else:
@@ -156,21 +156,22 @@ msg={
 if(username is not None and plan is not None and card_name is not None and card_number is not None and card_authNumber is not None and card_expiryDate is not None):
     #determine amonunt by plan
     plans={
-        "plusA":30,
-        "plusB":50,
-        "pro":99
+        "plusA":{"price": 10, "credit": 3000},
+        "plusB":{"price": 30, "credit": 6000},
+        "pro":{"price": 89, "credit": 40000}
     }
     if(plans[plan] is None):
         msg["msg"]="plan is not correct. Only 'plusA', 'plusB' and 'pro' are accepted."
     else:
-        amount=int(plans[plan])
+        amount=int(plans[plan]["price"])
+        credit=int(plans[plan]["credit"])
         
         #connect to the BOA payment service
         outcome=purchase(card_name, card_number, card_authNumber, card_expiryDate, amount)
         
         if(outcome.get("errorMsg") is None and outcome["success"] is not None):
             #add credit
-            result=addCredit(amount)
+            result=addCredit(credit)
 
             if(result!="succeed"):
                 msg["msg"]=result
@@ -186,10 +187,10 @@ if(username is not None and plan is not None and card_name is not None and card_
             else:
                 msg["msg"]=outcome["ctr"]
             
-            #error log
-            r=recordError(msg["msg"])
-            if(r!="[log error]: log success"):
-                msg["msg"]=r
+        #record log
+        r=recordTransaction(msg["msg"], amount, outcome)
+        if(r!="[log error]: log success"):
+            msg["msg"]=r
 
 
 
