@@ -8,6 +8,10 @@ var app={
 }
 
 
+//use json in the cookie
+$.cookie.json=true;
+
+
 //init
 $(document).on({
 	"ready": function(){
@@ -101,7 +105,7 @@ function login(){
 			if(json.status=='ok' && json.account){
 				//write cookie
 				if($("#login_cookie").is(":checked")){
-					$.cookie("PathGeo", 'email='+ email, { expires: 7, path: '/' });
+					$.cookie("PathGeo", {'email': email, 'oauth': null}, { expires: 7, path: '/' });
 				}
 				
 				callParent(json.account);
@@ -150,6 +154,9 @@ function signup(){
 			$("#signup_loading").hide();
 			
 			if(json.status && json.status=='ok' && json.account){
+				//write cookie
+				$.cookie("PathGeo", {'email': email, 'oauth': null}, { expires: 7, path: '/' });
+				
 				callParent(json.account);
 			}else{
 				showMsg(json.msg);
