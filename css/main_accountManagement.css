@@ -45,6 +45,11 @@ html, body {width:100%; height:100%; padding:0px; margin:0px;overflow:hidden; fo
 #upgrade table td {border:1px solid #cccccc; padding:15px; }
 
 
+
+/**help*/
+#help iframe {width:100%; height:99%; border:0px; }
+
+
 /** about */
 #about img {cursor:pointer}
 #about .mail {width:70px; padding-right:20px; }

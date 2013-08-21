@@ -25,9 +25,9 @@ $(document).on({
 		getTransaction(email, oauth);
 		
 		//load getSatisfiction help
-		$.getScript("https://loader.engage.gsfn.us/loader.js", function(scipt){
-			if (typeof GSFN !== "undefined") { GSFN.loadWidget(5632,{"containerId":"getsat-widget-5632"}); }
-		});
+		// $.getScript("https://loader.engage.gsfn.us/loader.js", function(scipt){
+			// if (typeof GSFN !== "undefined") { GSFN.loadWidget(5632,{"containerId":"getsat-widget-5632"}); }
+		// });
 		
 		//switch to the tab if any
 		var tab=getURLParameter('tab');
