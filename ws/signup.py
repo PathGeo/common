@@ -5,6 +5,7 @@ import json as simplejson  #import libaray to use json
 from pymongo import MongoClient
 import smtplib #send email by using smtp
 import datetime
+import requests
 
 
 print "Content-Type: text/html \n"
@@ -53,7 +54,7 @@ def register(obj):
 
         id=collection.find_one({"email": obj["email"]})["_id"]
         id=str(id)
-        #sendEmail(obj["email"], id)
+        sendEmail(obj["email"], id)
 
 
         #define which field need to be sent back to client
@@ -71,7 +72,32 @@ def register(obj):
 
 
 #send email for validation-------------------------------------------------
-def sendEmail(email, id):
+def sendEmail(email):
+    from hashlib import sha512
+    from uuid import uuid4
+
+    userUUID = uuid4().hex
+    hashcode = sha512("emailVerify@PathGeo" + userUUID).hexdigest()
+
+    
+    #due to the smtp port is locked in the SDSU, we pass the request to EC2 server to send email
+    url="http://ec2-54-235-14-134.compute-1.amazonaws.com/python/sendMail.py"
+    header={"content-type":"application/x-www-form-urlencoded"}
+    data={
+        "email": email,
+        "contentType":"verify",
+        "code": hashcode
+    }
+    result=requests.post(url, headers=header, data=data, verify=False)
+
+    emailSent=False
+
+    if(result.status_code==200 and result.text is not None and "status" in result.text and result.text["status"]=="ok"):
+        emailSent=True
+
+    return emailSent, userUUID, result.text
+    
+    '''
     subject="[Pathgeo] Confirm your email address"
     body="""
     Dear Customers: <p></p> We are excited to have you with Pathgeo. <br>
@@ -101,6 +127,8 @@ def sendEmail(email, id):
 
     session.sendmail(app["gmailAccount"], email, headers + "\r\n\r\n" + body)
     session.quit()
+    '''
+    
 #------------------------------------------------------------------
 
 
@@ -116,12 +144,17 @@ msg={
 }
 
 if(email is not None and password is not None):
+
+    emailSent, userUUID, emailSentMsg=sendEmail(email)
+    
     #sign up
     #user obj
     obj={
+        "userUUID": userUUID,
         "email":email,
         "password":password,
-        "emailSent":False,
+        "emailSent":emailSent,
+        "emailSentMsg": emailSentMsg,
         "emailVerified": False,
         "dateRegister": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
         "accountType": "free",
