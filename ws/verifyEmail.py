@@ -7,9 +7,6 @@ from hashlib import sha512
 from uuid import uuid4
 
 
-print "Content-Type: text/html \n"
-
-
 app={
     "parameter":cgi.FieldStorage(),
     "dbName":"pathgeo",
@@ -44,7 +41,7 @@ def checkEmailHashCode(email, code):
     }
     
     if(user is not None):
-        if("emailVerified" in user and user["emailVerified"]==True):
+        if("emailVerified" in user and user["emailVerified"]):
             result={
                 "status":"ok",
                 "msg":"email verified"
@@ -77,7 +74,7 @@ code=getParameterValue("code")
 
 msg={
     "status":"error",
-    "msg":"email or password is not correct! Please check again"
+    "msg":"email or code is not correct! Please check again"
 }
 
 
@@ -85,4 +82,8 @@ if(email is not None and code is not None):
     msg=checkEmailHashCode(email, code)
 
 
-print simplejson.dumps(msg)
+if msg["status"]=="ok":
+    print "Location: https://www.pathgeo.com \n"
+else:
+    print "Content-Type: text/html \n"
+    print simplejson.dumps(msg)

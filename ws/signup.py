@@ -39,6 +39,9 @@ def getParameterValue(name):
     
 #register user to db-------------------------------------------------------
 def register(obj):
+    from hashlib import sha512
+    from uuid import uuid4
+    
     client=MongoClient()
     collection=client[app["dbName"]][app["dbCollection"]]
     user=collection.find_one({"email":obj["email"]})
@@ -50,11 +53,19 @@ def register(obj):
             "msg":"The email address is already existed. Please use other email to sign up"
         }
     else:
-        collection.insert(obj)
+        #generate userUUID and emailHashcode
+        userUUID = uuid4().hex
+        emailHashcode = sha512("emailVerify@PathGeo" + userUUID).hexdigest()
 
-        id=collection.find_one({"email": obj["email"]})["_id"]
-        id=str(id)
-        sendEmail(obj["email"], id)
+        #send email
+        emailSent, emailSentMsg=sendEmail(email, emailHashcode)
+
+        obj["userUUID"]=userUUID
+        obj["emailSent"]=emailSent
+        obj["emailSentMsg"]=emailSentMsg
+        obj["emailVerified"]=False
+        
+        collection.insert(obj)
 
 
         #define which field need to be sent back to client
@@ -72,14 +83,7 @@ def register(obj):
 
 
 #send email for validation-------------------------------------------------
-def sendEmail(email):
-    from hashlib import sha512
-    from uuid import uuid4
-
-    userUUID = uuid4().hex
-    hashcode = sha512("emailVerify@PathGeo" + userUUID).hexdigest()
-
-    
+def sendEmail(email, hashcode):
     #due to the smtp port is locked in the SDSU, we pass the request to EC2 server to send email
     url="http://ec2-54-235-14-134.compute-1.amazonaws.com/python/sendMail.py"
     header={"content-type":"application/x-www-form-urlencoded"}
@@ -91,11 +95,11 @@ def sendEmail(email):
     result=requests.post(url, headers=header, data=data, verify=False)
 
     emailSent=False
-
-    if(result.status_code==200 and result.text is not None and "status" in result.text and result.text["status"]=="ok"):
+    msg=simplejson.loads(result.text)
+    if(result.status_code==200 and msg is not None and "status" in msg and msg["status"]=="ok"):
         emailSent=True
 
-    return emailSent, userUUID, result.text
+    return emailSent, result.text
     
     '''
     subject="[Pathgeo] Confirm your email address"
@@ -144,18 +148,11 @@ msg={
 }
 
 if(email is not None and password is not None):
-
-    emailSent, userUUID, emailSentMsg=sendEmail(email)
-    
     #sign up
     #user obj
     obj={
-        "userUUID": userUUID,
         "email":email,
         "password":password,
-        "emailSent":emailSent,
-        "emailSentMsg": emailSentMsg,
-        "emailVerified": False,
         "dateRegister": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
         "accountType": "free",
         "credit": 6000,
