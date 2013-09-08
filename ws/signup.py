@@ -64,6 +64,7 @@ def register(obj):
         obj["emailSent"]=emailSent
         obj["emailSentMsg"]=emailSentMsg
         obj["emailVerified"]=False
+        obj["password"]=sha512(obj["password"] + userUUID).hexdigest()
         
         collection.insert(obj)
 

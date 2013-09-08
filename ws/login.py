@@ -3,6 +3,9 @@
 import cgi #import cgi library to get url parameters from users
 import json as simplejson  #import libaray to use json
 from pymongo import MongoClient
+from hashlib import sha512
+from uuid import uuid4
+    
 
 print "Content-Type: text/html \n"
 
@@ -36,8 +39,9 @@ def checkLogin(email, password):
     if(user is not None):
         #check password
         pw=user["password"]
-            
-        if(pw==password):
+        userUUID=user["userUUID"]
+        
+        if(pw==sha512(password + userUUID).hexdigest()):
             accountInfo={}
             for info in infos:
                 accountInfo[info]=user[info]

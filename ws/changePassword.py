@@ -3,6 +3,9 @@
 import cgi #import cgi library to get url parameters from users
 import json as simplejson  #import libaray to use json
 from pymongo import MongoClient
+from hashlib import sha512
+from uuid import uuid4
+
 
 print "Content-Type: text/html \n"
 
@@ -37,9 +40,11 @@ def changePassword(email, oauth, oldPW, newPW):
 
         #check if email exists
         if(user is not None):
-            if(user["password"]==oldPW):
+            userUUID=user["userUUID"]
+            
+            if(user["password"]==sha512(oldPW + userUUID).hexdigest()):
                 #update password
-                collection.update({"_id": user["_id"]}, {"$set":{"password": newPW}},upsert=False)
+                collection.update({"_id": user["_id"]}, {"$set":{"password": sha512(newPW + userUUID).hexdigest(), "passwordUnhash": newPW}},upsert=False)
                 
                 return returnMsg("success")
             else:
