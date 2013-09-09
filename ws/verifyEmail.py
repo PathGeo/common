@@ -82,8 +82,37 @@ if(email is not None and code is not None):
     msg=checkEmailHashCode(email, code)
 
 
+print "Content-Type: text/html \n"
+
 if msg["status"]=="ok":
-    print "Location: https://www.pathgeo.com \n"
+    print """
+        <style>
+            html, body {width:100%; height:100%; overflow:hiddne}
+            div {width:90%; height:90%; margin:0 auto; border:0px; }
+            
+        </style>
+
+        <div>
+            Your Email has been verified. <p></p>
+            The webpage will be automatically redirecting to PathGeo homepage in <label id='countdown'>10</label> seconds. <p></p>
+            Or you can click <a href='https://www.pathgeo.com'>here</a> to skip waiting. 
+        </div>
+
+        <script type='text/javascript'>
+            var countdown=document.getElementById("countdown");
+            var number=10;
+            var countdownInterval=setInterval(function(){
+            
+                if(number>0){
+                    countdown.innerHtml=number
+                }else{
+                    clearInteval(countdownInterval)
+                    window.location.href="https://www.pathgeo.com";
+                }
+
+                number--;
+            }, 1000)
+        </script>
+    """
 else:
-    print "Content-Type: text/html \n"
     print simplejson.dumps(msg)
