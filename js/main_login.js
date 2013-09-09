@@ -108,7 +108,7 @@ function login(){
 					$.cookie("PathGeo", {'email': email, 'oauth': null}, { expires: 7, path: '/' });
 				}
 				
-				callParent(json.account);
+				callParent(json.account, 'login');
 			}else{
 				//show error msg
 				$("#login_msg").html(json.msg);
@@ -157,7 +157,7 @@ function signup(){
 				//write cookie
 				$.cookie("PathGeo", {'email': email, 'oauth': null}, { expires: 7, path: '/' });
 				
-				callParent(json.account);
+				callParent(json.account, 'signup');
 			}else{
 				showMsg(json.msg);
 				return;
@@ -198,9 +198,9 @@ function showOauth(provider){
 
 
 //call parent function
-function callParent(accountInfo){
+function callParent(accountInfo, status){
 	if(parent.writeAccountInfo){
-		parent.writeAccountInfo(accountInfo);	
+		parent.writeAccountInfo(accountInfo, {status:status});	
 	}else{
 		console.log("[ERROR] no parent.writeAccountInfo function. Please check again.");
 	}
