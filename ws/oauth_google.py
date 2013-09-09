@@ -95,6 +95,10 @@ def getUserInfo(token):
 
 #save email in Mongo to detemine if the email is going to signup or login
 def saveinMongo(email):
+    from hashlib import sha512
+    from uuid import uuid4
+
+    
     userCollection=MongoClient()["pathgeo"]["user"]
     user=userCollection.find_one({"email":email, "oauth":"google"})
     infos=["email", "dateRegister", "accountType", "credit", "oauth"]
@@ -111,7 +115,11 @@ def saveinMongo(email):
             "dateRegister": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
             "accountType": "free",
             "credit": 1500,
-            "oauth":"google"
+            "oauth":"google",
+            "userUUID": uuid4().hex,
+            "emailSent": False,
+            "emailSentMsg": None,
+            "emailVerified": True
         }
         status="signup"
         userCollection.save(user)

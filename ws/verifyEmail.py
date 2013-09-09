@@ -89,7 +89,7 @@ if msg["status"]=="ok":
         <html><head>
             <style>
                 html, body {width:100%; height:100%; overflow:hidden; padding:0px; margin:0px; font-family:Arial;}
-                #mainContent {width:45%; height:30%; margin:0 auto; border:0px; margin-top:100px;  }
+                #mainContent {width:70%; height:30%; margin:0 auto; border:0px; margin-top:100px;  }
                 #mainContent img {float:left; width:100px; height:100px; margin-top:20px; }
                 #mainContent div {float:right;}
             </style>
