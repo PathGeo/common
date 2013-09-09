@@ -3,7 +3,7 @@ import cgi #import cgi library to get url parameters from users
 import json  #import libaray to use json
 import requests
 
-NEW_PASSWORD_URL = 'http://ec2-54-235-14-134.compute-1.amazonaws.com/python/sendMail.py?contentType=forgetPW&email=%s&code=%s'
+SEND_EMAIL_URL = 'http://ec2-54-235-14-134.compute-1.amazonaws.com/python/sendMail.py?contentType=forgetPW&email=%s&code=%s'
 VALID_CHARS = '@!*$0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 
@@ -25,7 +25,7 @@ if not email:
 
 	
 tempPassword = generateTempPassword()
-url = NEW_PASSWORD_URL % (email, tempPassword)
+url = SEND_EMAIL_URL % (email, tempPassword)
 	
 resp = requests.get(url)
 	
