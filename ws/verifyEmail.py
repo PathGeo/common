@@ -86,33 +86,43 @@ print "Content-Type: text/html \n"
 
 if msg["status"]=="ok":
     print """
-        <style>
-            html, body {width:100%; height:100%; overflow:hiddne}
-            div {width:90%; height:90%; margin:0 auto; border:0px; }
-            
-        </style>
+        <html><head>
+            <style>
+                html, body {width:100%; height:100%; overflow:hidden; padding:0px; margin:0px; font-family:Arial;}
+                #mainContent {width:45%; height:30%; margin:0 auto; border:0px; margin-top:100px;  }
+                #mainContent img {float:left; width:100px; height:100px; margin-top:20px; }
+                #mainContent div {float:right;}
+            </style>
+        </head>
 
-        <div>
-            Your Email has been verified. <p></p>
-            The webpage will be automatically redirecting to PathGeo homepage in <label id='countdown'>10</label> seconds. <p></p>
-            Or you can click <a href='https://www.pathgeo.com'>here</a> to skip waiting. 
-        </div>
+        <body>
+            <div id='mainContent'>
+                <img src='../images/PathGeo-circle-color.png'>
 
-        <script type='text/javascript'>
-            var countdown=document.getElementById("countdown");
-            var number=10;
-            var countdownInterval=setInterval(function(){
-            
-                if(number>0){
-                    countdown.innerHtml=number
-                }else{
-                    clearInteval(countdownInterval)
-                    window.location.href="https://www.pathgeo.com";
-                }
+                <div>
+                    <h2>Your Email has been verified.</h2>
+                    The webpage will be automatically redirecting to PathGeo homepage in <label id='countdown'>10</label> seconds. <p></p>
+                    Or you can click <a href='https://www.pathgeo.com'>here</a> to skip waiting. 
+                </div>
+            </div>
 
-                number--;
-            }, 1000)
-        </script>
+            <script type='text/javascript'>
+                var countdown=document.getElementById("countdown");
+                var number=9;
+                var countdownInterval=setInterval(function(){
+                
+                    if(number>0){
+                        countdown.innerHTML=number
+                    }else{
+                        clearInterval(countdownInterval)
+                        window.location.href="https://www.pathgeo.com";
+                    }
+
+                    number--;
+                }, 1000)
+            </script>
+        </body></html>
+        
     """
 else:
     print simplejson.dumps(msg)
