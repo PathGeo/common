@@ -99,6 +99,7 @@ def saveinMongo(email):
     user=userCollection.find_one({"email":email, "oauth":"google"})
     infos=["email", "dateRegister", "accountType", "credit", "oauth"]
     accountInfo={}
+    status="login"
 
     #if the user does not exist >> sign up, else >> login
     if(user is None):
@@ -112,12 +113,13 @@ def saveinMongo(email):
             "credit": 1500,
             "oauth":"google"
         }
+        status="signup"
         userCollection.save(user)
     
     #return account info
     for info in infos:
         accountInfo[info]=user[info]
-    return accountInfo
+    return accountInfo, status
 #------------------------------------------------------------------------------
 
 
@@ -146,7 +148,7 @@ else:
 
             #if getUserInfo sucesseed
             if userInfo is not None:
-                accountInfo=saveinMongo(userInfo["email"])
+                accountInfo, status=saveinMongo(userInfo["email"])
 
                 msg=None
                 '''
@@ -157,7 +159,7 @@ else:
                 }
                 '''
                 #send accountInfo back to the main webpage ('the parent of iframe') function: oauth_callback
-                print "<script>window.opener.oauth_callback("+ simplejson.dumps(accountInfo)+");</script>"
+                print "<script>window.opener.oauth_callback("+ simplejson.dumps(accountInfo)+", '" + status + "');</script>"
             else:
                 msg["msg"]="Error: userInfo: \n" + userInfo
         else:
