@@ -44,7 +44,7 @@ def register(obj):
     
     client=MongoClient()
     collection=client[app["dbName"]][app["dbCollection"]]
-    user=collection.find_one({"email":obj["email"]})
+    user=collection.find_one({"email":obj["email"], "oauth": obj["oauth"]})
     
     #determine whether email is already registered
     if (user is not None):
@@ -156,7 +156,7 @@ if(email is not None and password is not None):
         "password":password,
         "dateRegister": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
         "accountType": "free",
-        "credit": 6000,
+        "credit": 1500,
         "oauth":None
     }
 

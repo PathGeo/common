@@ -109,7 +109,7 @@ def saveinMongo(email):
             "emailVerified": False,
             "dateRegister": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
             "accountType": "free",
-            "credit": 3000,
+            "credit": 1500,
             "oauth":"google"
         }
         userCollection.save(user)
