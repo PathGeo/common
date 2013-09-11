@@ -33,7 +33,7 @@ def getParameterValue(name):
 def checkEmailHashCode(email, code):
     #get userUUID from MongoDB
     collection=MongoClient()["pathgeo"]["user"]
-    user=collection.find_one({"email": email})
+    user=collection.find_one({"email": email, "oauth":None})
 
     result={
         "status":"error",
@@ -50,7 +50,7 @@ def checkEmailHashCode(email, code):
             if("userUUID" in user and user["userUUID"] is not None):
                 userUUID=user["userUUID"]
                 hashcode = sha512("emailVerify@PathGeo" + userUUID).hexdigest()
-
+                
                 if(hashcode==code):
                     user["emailVerified"]=True
                     collection.save(user)
@@ -78,11 +78,14 @@ msg={
 }
 
 
+print "Content-Type: text/html \n"
+
+
 if(email is not None and code is not None):
     msg=checkEmailHashCode(email, code)
 
 
-print "Content-Type: text/html \n"
+
 
 if msg["status"]=="ok":
     print """
