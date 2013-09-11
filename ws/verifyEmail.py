@@ -53,6 +53,8 @@ def checkEmailHashCode(email, code):
                 
                 if(hashcode==code):
                     user["emailVerified"]=True
+                    #give extra 1500 credit
+                    user["credit"]=1500
                     collection.save(user)
                     
                     result={
