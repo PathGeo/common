@@ -1,6 +1,10 @@
 #Standard Libraries
 import cgi #import cgi library to get url parameters from users
 import json  #import libaray to use json
+import re
+from pymongo import MongoClient
+from hashlib import sha512
+from uuid import uuid4
 import requests
 
 SEND_EMAIL_URL = 'http://ec2-54-235-14-134.compute-1.amazonaws.com/python/sendMail.py?contentType=forgetPW&email=%s&code=%s'
@@ -18,6 +22,8 @@ def generateTempPassword():
 form = cgi.FieldStorage()
 email = None if 'email' not in form else form['email'].value
 
+col = MongoClient().pathgeo.user
+
 if not email:
 	print ''
 	print json.dumps({'error': 'No email parameter passed.'})
@@ -25,8 +31,16 @@ if not email:
 
 	
 tempPassword = generateTempPassword()
+
+#store the hashed value of the new password, along with the new salt
+user = col.find_one({'email': re.compile(email, re.IGNORECASE)})
+userUUID = uuid4().hex
+user["userUUID"] = userUUID
+user["password"] = sha512(tempPassword + userUUID).hexdigest()
+col.save(user)
+
 url = SEND_EMAIL_URL % (email, tempPassword)
-	
+		
 resp = requests.get(url)
 	
 if not resp.ok:
