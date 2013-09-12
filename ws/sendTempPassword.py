@@ -26,7 +26,7 @@ col = MongoClient().pathgeo.user
 
 if not email:
 	print ''
-	print json.dumps({'error': 'No email parameter passed.'})
+	print json.dumps({'status': 'error', 'message': 'No email parameter passed.'})
 	exit(1)
 
 	
@@ -34,6 +34,12 @@ tempPassword = generateTempPassword()
 
 #store the hashed value of the new password, along with the new salt
 user = col.find_one({'email': re.compile(email, re.IGNORECASE)})
+
+if not user:
+	print ''
+	print json.dumps({'status': 'error', 'message': 'Email could not be found! Please sign up first.'})
+	exit(1)
+
 userUUID = uuid4().hex
 user["userUUID"] = userUUID
 user["password"] = sha512(tempPassword + userUUID).hexdigest()
@@ -45,7 +51,7 @@ resp = requests.get(url)
 	
 if not resp.ok:
 	print ''
-	print json.dumps({'error': 'Error occurred when sending temporary password to EC2.'})
+	print json.dumps({'status': 'error', 'message': 'Error occurred when sending temporary password to EC2.'})
 else:
 	print ''
-	print json.dumps({'ok': 'looks good!'})
+	print json.dumps({'status': 'ok', 'message': 'looks good!'})

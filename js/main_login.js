@@ -34,11 +34,27 @@ function init_ui(){
 	
 
 	//change title based on the 'product' parameter
-	changeTitle(product)
-	
-	
+	changeTitle(product);	
 }
 
+function emailPrompt() {
+	//get email (trim off whitespace)
+	var email = prompt("Enter your email address:").replace( /^\s+|\s+$/g, ''); 
+	
+	if (!email) {
+		alert("Please enter a password!");
+	} else {
+		var url = 'ws/sendTempPassword.py?email=' + email;
+		$.getJSON(url, function(data) {
+			console.log(data);
+			if (data.status != 'ok') {
+				$("#login_msg").html(data.message);
+			} else {
+				$("#login_msg").html("Your temporary password has been sent to your email address.");
+			}
+		});
+	}
+}
 
 
 //change title
