@@ -39,6 +39,7 @@ function init_ui(){
 
 function emailPrompt() {
 	//get email (trim off whitespace)
+	$("login_msg").html("");
 	var email = prompt("Enter your email address:").replace( /^\s+|\s+$/g, ''); 
 	
 	if (!email) {
