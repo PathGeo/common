@@ -70,7 +70,7 @@
                                 
 								<input id="btn_login" type="submit" value="Login" data-role="button" data-inline="true" data-theme="b" onclick="login();" />
 
-								<a href="" onclick="emailPrompt();">Forgot your password?  Click here.</a>
+								<a href="" onclick='$("#dialog_forgetPW").popup("open");'>Forgot your password?</a>
 								
 								<div id='login_msg' class='msg'></div>
             	</fieldset> 
@@ -103,6 +103,19 @@
 			 	<img src='images/sign-in-with-google.png' value='google' onclick='showOauth("google");'/>
 			 </div>
 			
+			
+			<!--dialog forgetPW-->
+			<div id='dialog_forgetPW' data-role="popup" data-overlay-theme="" data-theme="c" data-dismissible="false" style=''>
+				<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<H2>Forgot your password?</H2>
+				<p>Please input your email. A temporary password will be sent to you:</p>
+				<input id='input_email' type='text' />
+				
+				<a href="#" data-role="button" data-mini="true" data-inline="true" onclick='$("#dialog_forgetPW").popup("close");$("#forgetPW_msg").html("");$("#input_email").val("")'>Cancel</a>
+    			<a href="#" data-role="button" data-mini="true" data-inline="true" data-theme="b" onclick='emailPrompt();'>Confirm</a>
+				
+				<div id='forgetPW_msg'></div>
+			</div>
 		</div>
 		
 

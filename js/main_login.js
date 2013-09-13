@@ -38,20 +38,22 @@ function init_ui(){
 }
 
 function emailPrompt() {
+	var $msg=$("#forgetPW_msg");
+	$msg.html("<img src='images/loading.gif' width='25px' height='25px'  />");
+	
 	//get email (trim off whitespace)
-	$("login_msg").html("");
-	var email = prompt("Enter your email address:").replace( /^\s+|\s+$/g, ''); 
+	var email=$("#input_email").val().replace( /^\s+|\s+$/g, '');
 	
 	if (!email) {
-		alert("Please enter a password!");
+		$msg.html("Please enter an email address!")
 	} else {
 		var url = 'ws/sendTempPassword.py?email=' + email;
 		$.getJSON(url, function(data) {
 			console.log(data);
 			if (data.status != 'ok') {
-				$("#login_msg").html(data.message);
+				$msg.html(data.message);
 			} else {
-				$("#login_msg").html("Your temporary password has been sent to your email address.");
+				$msg.html("Your temporary password has been sent to your email address.");
 			}
 		});
 	}
