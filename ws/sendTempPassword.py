@@ -33,7 +33,7 @@ if not email:
 tempPassword = generateTempPassword()
 
 #store the hashed value of the new password, along with the new salt
-user = col.find_one({'email': re.compile(email, re.IGNORECASE)})
+user = col.find_one({'email': re.compile(email, re.IGNORECASE), "oauth":None})
 
 if not user:
 	print ''
