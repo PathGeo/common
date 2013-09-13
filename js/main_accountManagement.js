@@ -203,6 +203,10 @@ function changePW(){
 
 //showPayment
 function showPayment(plan){
+	if(plan=='plus'){
+		plan=$("#sel_plus").val();
+	}
+	
 	//redirect to accountManagement.html
 	window.location.href="purchaseCredit.html?email="+app.userInfo.email+"&oauth="+app.userInfo.oauth+"&plan="+plan;
 }

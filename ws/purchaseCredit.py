@@ -156,12 +156,14 @@ msg={
 if(username is not None and plan is not None and card_name is not None and card_number is not None and card_authNumber is not None and card_expiryDate is not None):
     #determine amonunt by plan
     plans={
-        "plusA":{"price": 10, "credit": 3000},
-        "plusB":{"price": 30, "credit": 6000},
+        "plusA":{"price": 5, "credit": 500},
+        "plusB":{"price": 10, "credit": 3500},
+        "plusC":{"price": 20, "credit": 8000},
+        "plusD":{"price": 30, "credit": 12000},
         "pro":{"price": 89, "credit": 40000}
     }
     if(plans[plan] is None):
-        msg["msg"]="plan is not correct. Only 'plusA', 'plusB' and 'pro' are accepted."
+        msg["msg"]="plan is not correct. Only 'plusA', 'plusB','plusC','plusD' and 'pro' are accepted."
     else:
         amount=int(plans[plan]["price"])
         credit=int(plans[plan]["credit"])

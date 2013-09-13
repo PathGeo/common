@@ -98,16 +98,24 @@ function showPayment(plan){
 	
 	switch(plan){
 		case "plusA":
-			price=10;
-			credit=3000;
+			price=5;
+			credit="500";
 		break;
 		case "plusB":
-			price=50;
-			credit=5000;
+			price=10;
+			credit="3,500";
+		break;
+		case "plusC":
+			price=20;
+			credit="8,000";
+		break;
+		case "plusD":
+			price=30;
+			credit="12,000";
 		break;
 		case "pro":
-			price=99;
-			credit="Unlimited";
+			price=89;
+			credit="40,000";
 		break;
 	}
 	//set up payment amount infcrmation
@@ -117,10 +125,10 @@ function showPayment(plan){
 			
 
 	//google anlytics tracking event
-	if(price==99){
+	if(price==89){
 		_gaq.push(['_trackEvent', 'Account', 'Pro', app.userInfo.email]);
 	}else{
-		if(price>0 && price<99){
+		if(price>0 && price<89){
 			_gaq.push(['_trackEvent', 'Account', 'Plus', app.userInfo.email]);
 		}
 	}
