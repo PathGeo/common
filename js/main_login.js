@@ -46,6 +46,8 @@ function emailPrompt() {
 	
 	if (!email) {
 		$msg.html("Please enter an email address!")
+	} else if (!email.match(/\S+@\S+/)) {
+		$msg.html("Please enter a valid email address!");
 	} else {
 		var url = 'ws/sendTempPassword.py?email=' + email;
 		$.getJSON(url, function(data) {
