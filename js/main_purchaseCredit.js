@@ -3,6 +3,13 @@ var app={
 		email:null,
 		plan:null,
 		oauth:null
+	},
+	plans:{
+		"plusA":{price:5, credit:"500"},
+		"plusB":{price:10, credit:"3500"},
+		"plusC":{price:20, credit:"8000"},
+		"plusD":{price:30, credit:"12000"},
+		"pro":{price:89, credit:"40000"}
 	}
 }
 
@@ -94,30 +101,10 @@ function validateCreditCard(result){
 
 //show payment
 function showPayment(plan){	
-	var price, credit;
+	plan=app.plans[plan];
+	var price=plan.price, credit=plan.credit;
 	
-	switch(plan){
-		case "plusA":
-			price=5;
-			credit="500";
-		break;
-		case "plusB":
-			price=10;
-			credit="3,500";
-		break;
-		case "plusC":
-			price=20;
-			credit="8,000";
-		break;
-		case "plusD":
-			price=30;
-			credit="12,000";
-		break;
-		case "pro":
-			price=89;
-			credit="40,000";
-		break;
-	}
+	
 	//set up payment amount infcrmation
 	$("#payment_amount").html("$"+price+" USD");
 	$("#payment_credit").html(credit+" Credits");
@@ -181,42 +168,62 @@ function purchase(){
 			
 			
 			if(app.userInfo.valideCreditcard){
-				//show loading image
-				$("#payment_loading").show();
+				//show confirm dialog
+				var confirmHtml="<h2>Please confirm the following information:</h2>"+
+								"<table>"+
+								"<tr><td>Email Account:</td><td>"+ app.userInfo.email +"</td></tr>"+
+								"<tr><td>Charge:</td><td>$ "+ app.plans[plan].price +" USD</td></tr>"+
+								"<tr><td>Credit:</td><td>"+ app.plans[plan].credit +"</td></tr>"+
+								"<tr><td>Cardholder Name:</td><td>"+ card_name +"</td></tr>"+
+								"<tr><td>Card Number:</td><td>"+ card_number +"</td></tr>"+
+								"<tr><td>Expiry Date:</td><td>"+ expiryDate +"</td></tr>"+
+								"<tr><td>Security Code:</td><td>"+ card_authNumber +"</td></tr>"+
+								"</table>";
 				
-				//send request to the purchase service
-				$.ajax({
-					url:"ws/purchaseCredit.py",
-					data:{
-						email:app.userInfo.email,
-						oauth:app.userInfo.oauth,
-						plan:plan,
-						card_name:card_name,
-						card_number:card_number,
-						card_expiryDate:expiryDate,
-						card_authNumber:card_authNumber
-					},
-					method:"post",
-					dataType:"json",
-					success:function(result){
-						//hide loading image
-						$("#payment_loading").hide();
-						
-						console.log(result);
-						//if error
-						if(result.status && result.status=='error'){
-							showPaymentMsg(result.msg);
-							return; 
+				var $dialogConfirm=$("#dialog_confirm");
+				$dialogConfirm.popup('open').find("#confirmContent").html(confirmHtml);
+				
+				//write confirm button click event
+				$dialogConfirm.find("#confirm").click(function(){
+					$dialogConfirm.popup('close');
+					
+					//show loading image
+					$("#payment_loading").show();
+					
+					//send request to the purchase service
+					$.ajax({
+						url:"ws/purchaseCredit.py",
+						data:{
+							email:app.userInfo.email,
+							oauth:app.userInfo.oauth,
+							plan:plan,
+							card_name:card_name,
+							card_number:card_number,
+							card_expiryDate:expiryDate,
+							card_authNumber:card_authNumber
+						},
+						method:"post",
+						dataType:"json",
+						success:function(result){
+							//hide loading image
+							$("#payment_loading").hide();
+							
+							console.log(result);
+							//if error
+							if(result.status && result.status=='error'){
+								showPaymentMsg(result.msg);
+								return; 
+							}
+	
+						},
+						error:function(error){
+							console.log(error);
+							showPaymentMsg(error.responseText)
+							//hide loading image
+							$("#payment_loading").hide();
 						}
-
-					},
-					error:function(error){
-						console.log(error);
-						showPaymentMsg(error.responseText)
-						//hide loading image
-						$("#payment_loading").hide();
-					}
-				})
+					})
+				});
 				
 			}else{
 				showPaymentMsg('Please input the correct credit card number.');
