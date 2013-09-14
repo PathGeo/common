@@ -167,11 +167,13 @@ if(username is not None and plan is not None and card_name is not None and card_
     else:
         amount=int(plans[plan]["price"])
         credit=int(plans[plan]["credit"])
+
         
         #connect to the BOA payment service
         outcome=purchase(card_name, card_number, card_authNumber, card_expiryDate, amount)
-        
-        if(outcome.get("errorMsg") is None and outcome["success"] is not None):
+
+        #if transaction succeed
+        if(outcome.get("errorMsg") is None and outcome["transaction_error"]==0 and outcome["transaction_approved"]==1):
             #add credit
             result=addCredit(credit)
 
