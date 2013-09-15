@@ -43,7 +43,8 @@ for user in pathgeoUser.find():
         results.append({
             "email": user["email"],
             "dateRegister": user["dateRegister"],
-            "leftCredit": user["credit"]
+            "leftCredit": user["credit"],
+            "accountType": user["accountType"]
         })
 
 if(len(results)>0):
