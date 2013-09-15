@@ -59,13 +59,14 @@ def calculateHashcode(x_login, x_fp_sequence, x_fp_timestamp, x_amount, x_curren
 
 
 #add credit and record transaction
-def addCredit(credit):
+def addCredit(credit, accountType):
     user=userCollection.find_one({"email":username, "oauth":oauth})
     credit=int(credit)
     
     if(user is not None):
         if(user["credit"] is not None):
             user["credit"]=user["credit"] + credit
+            user["accountType"]=accountType
             userCollection.save(user)
     
             #transaction
@@ -167,6 +168,7 @@ if(username is not None and plan is not None and card_name is not None and card_
     else:
         amount=int(plans[plan]["price"])
         credit=int(plans[plan]["credit"])
+        accountType="plus" if amount < 89 else "pro"
 
         
         #connect to the BOA payment service
@@ -175,7 +177,7 @@ if(username is not None and plan is not None and card_name is not None and card_
         #if transaction succeed
         if(outcome.get("errorMsg") is None and outcome["transaction_error"]==0 and outcome["transaction_approved"]==1):
             #add credit
-            result=addCredit(credit)
+            result=addCredit(credit, accountType)
 
             if(result!="succeed"):
                 msg["msg"]=result
