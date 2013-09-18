@@ -273,7 +273,7 @@ function showReceipt(msg){
 
 //print
 function print(){
-	var mywindow = window.open('', 'my div', 'height=400,width=600');
+	var mywindow = window.open('', 'my div', 'height=500,width=700');
         mywindow.document.write('<html><head><title>Pathgeo Receipt</title>');
         mywindow.document.write('</head><body >');
         mywindow.document.write($("#receiptContent").html());

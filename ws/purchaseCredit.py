@@ -170,10 +170,6 @@ if(username is not None and plan is not None and card_name is not None and card_
         credit=int(plans[plan]["credit"])
         accountType="plus" if amount < 89 else "pro"
 
-        
-        #test only amount=1
-        amount=1
-
         #connect to the BOA payment service
         outcome=purchase(card_name, card_number, card_authNumber, card_expiryDate, amount)
 
