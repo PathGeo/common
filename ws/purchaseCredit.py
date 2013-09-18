@@ -74,7 +74,7 @@ def addCredit(credit, accountType):
                 "email": username,
                 "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z"),
                 "description": "[addCredit] " + str(credit),
-                "transaction": credit,
+                "transaction": "None",
                 "balance": user["credit"],
                 "oauth":oauth
             })
@@ -85,7 +85,7 @@ def addCredit(credit, accountType):
         return "no such user"
 #--------------------------------------------------------------------------
 
-#send data to FirstData,our BOA payment service, to pay
+#send request to FirstData,our BOA payment service, to pay
 def purchase(cardholder_name, cardholder_number, cardholder_authNumber, cardholder_expiryDate, amount):
     import urllib2, base64, requests
 
@@ -171,11 +171,15 @@ if(username is not None and plan is not None and card_name is not None and card_
         accountType="plus" if amount < 89 else "pro"
 
         
+        #test only amount=1
+        amount=1
+
         #connect to the BOA payment service
         outcome=purchase(card_name, card_number, card_authNumber, card_expiryDate, amount)
 
+
         #if transaction succeed
-        if(outcome.get("errorMsg") is None and outcome["transaction_error"]==0 and outcome["transaction_approved"]==1):
+        if(outcome.get("errorMsg") is None and outcome["transaction_error"]==0 and outcome["transaction_approved"]==1 and outcome["bank_message"]=="Approved"):
             #add credit
             result=addCredit(credit, accountType)
 
@@ -184,7 +188,7 @@ if(username is not None and plan is not None and card_name is not None and card_
             else:
                 msg={
                     "status":"ok",
-                    "msg":"add credit succeed"
+                    "msg":outcome["ctr"]
                 }
         else:
             #transaction failed
