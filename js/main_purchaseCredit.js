@@ -267,6 +267,18 @@ function getURLParameter(name) {
 //show receipt
 function showReceipt(msg){			
 	//show receipt
-	$("#receiptContent").html(String(msg).replace('\n', '<br>'));
+	$("#receiptContent").html(String(msg).replace(/\n/g, '<br>'));
 	$("#dialog_receipt").popup('open');
+}
+
+//print
+function print(){
+	var mywindow = window.open('', 'my div', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>Pathgeo Receipt</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write($("#receiptContent").html());
+        mywindow.document.write('</body></html>');
+
+        mywindow.print();
+        mywindow.close();
 }
