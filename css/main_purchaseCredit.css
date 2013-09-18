@@ -46,3 +46,8 @@ html, body {width:100%; height:100%; padding:0px; margin:0px;overflow:hidden; fo
 #confirmContent table td:first-child {width:130px; padding:5px 20px 5px 0px;  font-weight:bold;}
 
 #dialog_confirm a.ui-btn {float:right;}
+
+/**receipt*/
+#dialog_receipt {width:500px; height:400px; padding:30px;  }
+#receiptContent {height:300px; overflow-y:auto; overflow-x:hidden;}
+#dialog_receipt a[id='print'] {float:right; margin-top:15px;}

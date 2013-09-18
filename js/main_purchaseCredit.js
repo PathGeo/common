@@ -216,9 +216,7 @@ function purchase(){
 							
 							//if success
 							if(result.status=='ok'){
-								//print receipt
-								showPaymentMsg('Congratulations! Upgrade Sucessfully.');
-								console.log(result)
+								showReceipt(result.msg);
 							}
 	
 						},
@@ -263,4 +261,12 @@ function changePlan(){
 //get url parameter
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
+
+//show receipt
+function showReceipt(msg){			
+	//show receipt
+	$("#receiptContent").html(String(msg).replace('\n', '<br>'));
+	$("#dialog_receipt").popup('open');
 }
