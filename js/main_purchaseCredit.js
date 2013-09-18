@@ -183,8 +183,8 @@ function purchase(){
 				var $dialogConfirm=$("#dialog_confirm");
 				$dialogConfirm.popup('open').find("#confirmContent").html(confirmHtml);
 				
-				//write confirm button click event
-				$dialogConfirm.find("#confirm").click(function(){
+				//write confirm button click event. need to unbind first to make sure fire only one time
+				$dialogConfirm.find("#confirm").unbind().click(function(){
 					$dialogConfirm.popup('close');
 					
 					//show loading image
@@ -208,11 +208,17 @@ function purchase(){
 							//hide loading image
 							$("#payment_loading").hide();
 							
-							console.log(result);
 							//if error
 							if(result.status && result.status=='error'){
 								showPaymentMsg(result.msg);
 								return; 
+							}
+							
+							//if success
+							if(result.status=='ok'){
+								//print receipt
+								showPaymentMsg('Congratulations! Upgrade Sucessfully.');
+								console.log(result)
 							}
 	
 						},
