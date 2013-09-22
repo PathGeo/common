@@ -95,7 +95,7 @@ function login(){
 				credit: 2018,
 				dateRegister: "2013-08-02 06:$M:11 ",
 				email: "pathgeodemo",
-				accountType: "free"	
+				accountType: "plus"	
 			}
 		});
 		return;

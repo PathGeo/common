@@ -68,7 +68,14 @@ def addCredit(credit, accountType):
             user["credit"]=user["credit"] + credit
             user["accountType"]=accountType
             userCollection.save(user)
-    
+
+            #account info
+            infos=["email", "dateRegister", "accountType", "credit", "oauth"]
+            accountInfo={}
+            for info in infos:
+                accountInfo[info]=user[info]
+
+
             #transaction
             transaction.insert({
                 "email": username,
@@ -78,7 +85,7 @@ def addCredit(credit, accountType):
                 "balance": user["credit"],
                 "oauth":oauth
             })
-            return "succeed"
+            return "succeed", accountInfo
         else:
             return "no credit field"
     else:
@@ -177,14 +184,15 @@ if(username is not None and plan is not None and card_name is not None and card_
         #if transaction succeed
         if(outcome.get("errorMsg") is None and outcome["transaction_error"]==0 and outcome["transaction_approved"]==1 and outcome["bank_message"]=="Approved"):
             #add credit
-            result=addCredit(credit, accountType)
+            result, accountInfo=addCredit(credit, accountType)
 
             if(result!="succeed"):
                 msg["msg"]=result
             else:
                 msg={
                     "status":"ok",
-                    "msg":outcome["ctr"]
+                    "msg":outcome["ctr"],
+                    "accountInfo": accountInfo
                 }
         else:
             #transaction failed

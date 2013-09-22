@@ -217,6 +217,14 @@ function purchase(){
 							//if success
 							if(result.status=='ok'){
 								showReceipt(result.msg);
+								
+								//refresh account info
+								if(result.accountInfo){
+									callParent(accountInfo, {"update": true});
+								}else{
+									console.log('[ERROR] no account info. Please check');
+								}
+								
 							}
 	
 						},
@@ -281,4 +289,15 @@ function print(){
 
         mywindow.print();
         mywindow.close();
+}
+
+
+//call parent function
+function callParent(accountInfo, options){
+	if(parent.writeAccountInfo){
+		parent.writeAccountInfo(accountInfo, options);	
+	}else{
+		console.log("[ERROR] no parent.writeAccountInfo function. Please check again.");
+	}
+	
 }
