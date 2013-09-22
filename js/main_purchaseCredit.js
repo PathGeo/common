@@ -220,7 +220,7 @@ function purchase(){
 								
 								//refresh account info
 								if(result.accountInfo){
-									callParent(accountInfo, {"update": true});
+									callParent(result.accountInfo, {"update": true});
 								}else{
 									console.log('[ERROR] no account info. Please check');
 								}
