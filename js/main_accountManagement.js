@@ -88,6 +88,9 @@ function getAccountInfo(email, oauth){
 				})
 				html+="</ul>";
 				$("#accountDetail").html(html);
+				
+				//update account info
+				callParent(app.userInfo, {"update":true});
 			}
 		},
 		error: function(e){
@@ -216,4 +219,15 @@ function showPayment(plan){
 //get url parameter
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
+
+//call parent function
+function callParent(accountInfo, options){
+	if(parent.writeAccountInfo){
+		parent.writeAccountInfo(accountInfo, options);	
+	}else{
+		console.log("[ERROR] no parent.writeAccountInfo function. Please check again.");
+	}
+	
 }
