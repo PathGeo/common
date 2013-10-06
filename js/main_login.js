@@ -110,7 +110,7 @@ function login(){
 			password:password
 		},
 		dataType:"json",
-		method:"post",
+		type:"post",
 		success:success,
 		error: function(e){
 			console.log("[ERROR] Login ajax error!!");
@@ -163,7 +163,7 @@ function signup(){
 	$("#signup_loading").show();
 	
 	$.ajax({
-		method:"post",
+		type:"post",
 		url:"ws/signup.py", 
 		data:{
 			password:password,
